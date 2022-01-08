@@ -238,6 +238,135 @@ public:
         return max(p, q);
     }
 
+    bool canJump(vector<int>& nums) {
+        auto p = nums.end() - 1, q = p;
+        while ((q--) != nums.begin())
+        {
+            if (p - q <= *q)
+                p = q;
+        }
+        return (p == nums.begin());
+    }
+
+    /* A Time Exceeded answer
+    int jump(vector<int>& nums) {
+        const int N = nums.size();
+        vector<int> dp(N);
+        dp[0] = 0;
+        for (int i = 1; i < N; i++)
+        {
+            dp[i] = INT_MAX;
+            for (int j = 0; j < i; j++)
+                if (j + nums[j] >= i)
+                    dp[i] = min(dp[i], dp[j] + 1);
+        }
+        return dp[N - 1];
+    }*/
+
+    int jump(vector<int> &nums)
+    {
+        if (nums.size() == 1)
+            return 0;
+        int res = 0;
+        int l = 0, r = 0, rm = r;
+        for (; l < nums.size(); l++)
+        {
+            rm = max(l + nums[l], rm);
+            if (l == r)
+            {
+                r = max(rm, nums[r] + r);
+                res ++;
+                if (r >= nums.size()-1)
+                    break;
+            }
+        }
+        return res;
+    }
+
+    
+    // struct Status
+    // {
+    //     int neg_cnt, l_length, r_length, length, result;
+    // };
+
+    // Status pushup(const Status &l, const Status &r)
+    // {
+    //     int neg_cnt = l.neg_cnt + r.neg_cnt;
+    //     int l_length = r.neg_cnt == 0? l.l_length: l.length + r.l_length;
+    //     int r_length = l.neg_cnt == 0? r.r_length: l.r_length + r.length;
+    //     int length = l.length + r.length;
+    //     int result = neg_cnt%2==0? length: max(l_length, r_length);
+    //     return (Status){neg_cnt, l_length, r_length, length, result};
+    // }
+
+    // Status get(vector<int> &nums, int l, int r)
+    // {
+    //     if (l == r)
+    //     {
+    //         int neg_cnt = nums[l] > 0? 0: 1;
+    //         int result = (neg_cnt + 1) % 2;
+    //         return (Status){neg_cnt, 0, 0, 1, result};
+    //     }
+    //     int m = (l + r) >> 1;
+    //     return pushup(get(nums, l, m), get(nums, m+1, r));
+    // }
+    
+    // int getMaxLen(vector<int>& nums) {
+    //     int res = 0;
+    //     int i = 0;
+    //     while (nums[i] == 0)
+    //         if (++i == nums.size())
+    //             return res;
+    //     int j = i;
+    //     for (;j < nums.size(); j++)
+    //     {
+    //         if (nums[j] == 0)
+    //         {
+    //             res = max(get(nums, i, j-1).result, res);
+    //             i = j + 1;
+    //             while (nums[i] == 0)
+    //                 if (++i == nums.size())
+    //                     return res;
+    //             j = i;
+    //         }
+    //     }
+    //     res = max(get(nums, i, j-1).result, res);
+    //     return res;
+    // }
+
+    int maxScoreSightseeingPair(const vector<int>& values)
+    {
+        int res = INT_MIN;
+        int cur = 0;
+        for (const int &val: values)
+        {
+            res = max(res, cur + val - 1);
+            cur = max(cur - 1, val);
+        }
+        return res;
+    }
+
+    // int maxProfit(vector<int>& prices) {
+    //     int res = 0, cur = INT_MAX;
+    //     for (const int &price: prices)
+    //     {
+    //         res = max(res, price - cur);
+    //         cur = min(cur, price);
+    //     }
+    //     return res;
+    // }
+
+    int maxProfit(vector<int>& prices) {
+        int pre = prices[0], res = 0;
+        for (const int &price: prices)
+        {
+            if (price > pre)
+                res += price - pre;
+            pre = price;            
+        }
+        return res;
+    }
+
 };
 
 #endif

@@ -34,7 +34,7 @@ Python中为内置库`bisect`中的`bisect_left`和`bisect_right`函数。摘录
 > bisect_left(a, x[, lo[, hi]]) -> index
 >    Return the index where to insert item x in list a, assuming a is sorted.
 >    
->     The return value i is such that all e in a[:i] have e < x, and all e in a[i:] have e >= x.  So if x already appears in the list, i points just before the leftmost x already there.
+> The return value i is such that all e in a[:i] have e < x, and all e in a[i:] have e >= x.  So if x already appears in the list, i points just before the leftmost x already there.
 
 即找到第一个**大于等于**（C++的两个函数不取等）目标值的数的下标。`bisect_right`函数找到的是第一个大于目标值的数的下标。如果不存在，它们都会返回`len(nums)`。
 很多时候，这个算法需要手动实现。快速地写出这一对分查找算法十分重要，今把我的个人经验记录如下。
@@ -92,7 +92,7 @@ Python中为内置库`bisect`中的`bisect_left`和`bisect_right`函数。摘录
    }
    ```
 
-   如今我们要做最关键的一步：**检验**。注意，这套技巧中，检验是必不可少的，而且我们检验的情况也是很简单的：我们只须考虑`l + 1 == m`的情况，这是跳出循环前的最后一步（必然的）。我们只须检验是否会出现**死循环**。
+   如今我们要做最关键的一步：**检验**。注意，这套技巧中，检验是必不可少的，而且我们检验的情况也是很简单的：我们只须考虑`l + 1 == r`的情况，这是跳出循环前的最后一步（必然的）。我们只须检验是否会出现**死循环**。
 
    > 我们不妨假设`[3, 4]`是最后的查找区间，且`target == 3`。容易发现，当计算机只差一步就可以返回正确答案时，它陷入了死循环。而算法中的其他部分都是确定的，唯一能改变的就只是`int m = (l + r) >> 1`这一步：我们采用了向下取整，而它造成了死循环。为了解决这一问题，我们将其改为向上取整。
 
