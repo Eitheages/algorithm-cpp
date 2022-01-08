@@ -34,7 +34,7 @@ Python中为内置库`bisect`中的`bisect_left`和`bisect_right`函数。摘录
 > bisect_left(a, x[, lo[, hi]]) -> index
 >    Return the index where to insert item x in list a, assuming a is sorted.
 >    
->     The return value i is such that all e in a[:i] have e < x, and all e in a[i:] have e >= x.  So if x already appears in the list, i points just before the leftmost x already there.
+> The return value i is such that all e in a[:i] have e < x, and all e in a[i:] have e >= x.  So if x already appears in the list, i points just before the leftmost x already there.
 
 即找到第一个**大于等于**（C++的两个函数不取等）目标值的数的下标。`bisect_right`函数找到的是第一个大于目标值的数的下标。如果不存在，它们都会返回`len(nums)`。
 很多时候，这个算法需要手动实现。快速地写出这一对分查找算法十分重要，今把我的个人经验记录如下。

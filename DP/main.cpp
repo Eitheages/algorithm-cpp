@@ -1,8 +1,10 @@
 #include "SingleString.h"
 
+
 int main() {
-    vector<vector<int>> matrix = {{2,2,-1}};
+    vector<int> nums = {7,1,5,3,6,4};
     Solution *p = new Solution;
-    int res = p->maxSumSubmatrix(matrix, 3);
-    cout << res;
+    int res = p->maxProfit(nums);
+    cout << res << endl;
+    return 0;
 }

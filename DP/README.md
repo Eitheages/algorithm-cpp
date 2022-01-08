@@ -61,7 +61,7 @@ classic.h文件记录了一个经典的问题：最长上升字串。
   可以看到，按理来说我们要写四个判断语句。但是事实上，同时调换和同时不调换的情况是一致的，只有一个调换的情况也是一致的，所以我们只需要两个判断语句。 
   于是我们便可以作出解答。
 
-+ 790.多米诺和托米诺平铺
++ ==790.多米诺和托米诺平铺== numTilings
 
   > 有两种形状的瓷砖：一种是 2x1 的多米诺形，另一种是形如 "L" 的托米诺形。两种形状都可以旋转。  
   >
@@ -123,12 +123,13 @@ classic.h文件记录了一个经典的问题：最长上升字串。
   > 在此处，环形数组意味着数组的末端将会与开头相连呈环状。（形式上，当0 <= i < A.length 时 C[i] = A[i]，且当 i >= 0 时 C[i+A.length] = C[i]）
   >
   > 此外，子数组最多只能包含固定缓冲区 A 中的每个元素一次。（形式上，对于子数组 C[i], C[i+1], ..., C[j]，不存在 i <= k1, k2 <= j 其中 k1 % A.length = k2 % A.length）
-  
-  思路：只看图，来自美国站大佬[Solution](https://assets.leetcode.com/users/motorix/image_1538888300.png)
-  
-+ 面试题 17.24. 最大子矩阵 getMaxMatrix
 
-+ 363.矩形区域不超过 K 的最大数值和 maxSumSubmatrix
+  思路：只看图，来自美国站大佬 [Solution](https://assets.leetcode.com/users/motorix/image_1538888300.png)
+  极端情况：对于和最大的子数组（非环形），它非正当且仅当数组中没有正数，并且此时，和最大的子数组等于最大的那一个数，和最小的子数组等于整个数组。于是可知：当`max_num`非正时，应该无条件取`max_num`，因为和最小的子数组包含了所有的数。
+
++ ==面试题 17.24. 最大子矩阵== getMaxMatrix
+
++ ==363.矩形区域不超过 K 的最大数值和== maxSumSubmatrix
 
   > Given an `m x n` matrix `matrix` and an integer `k`, return *the max sum of a rectangle in the matrix such that its sum is no larger than* `k`.
   >
@@ -136,7 +137,7 @@ classic.h文件记录了一个经典的问题：最长上升字串。
 
   老实说，感觉这道题跟DP没啥关系...
 
-+ 198.打家劫舍 rob
++ ==198.打家劫舍== rob
 
   > You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and **it will automatically contact the police if two adjacent houses were broken into on the same night**.
   >
@@ -144,13 +145,13 @@ classic.h文件记录了一个经典的问题：最长上升字串。
   >
   > 中文释义：不能同时偷相邻的房间
 
-+ 213.打家劫舍 II
++ ==213.打家劫舍 II==
 
   > All houses at this place are **arranged in a circle.**
 
-  其实只需要对[1: n]，[0: n-1]分别做上述动态规划即可
+  其实只需要对[1: n]，[0: n-1]分别做打家劫舍I的动态规划即可
 
-+ 740.删除并获得点数
++ ==740.删除并获得点数== deleteAndEarn
 
   > You are given an integer array `nums`. You want to maximize the number of points you get by performing the following operation any number of times:
   >
@@ -165,5 +166,84 @@ classic.h文件记录了一个经典的问题：最长上升字串。
 
   个人思路：桶排序。耗时还以外的短，就是耗空间。
 
-+ 1388.3n 块披萨
++ ==55.Jump Game==  canJump
+
+  > You are given an integer array `nums`. You are initially positioned at the array's **first index**, and each element in the array represents your maximum jump length at that position.
+  >
+  > Return `true` *if you can reach the last index, or* `false` *otherwise*.
+  >
+  > **Constraints:**
+  >
+  > + $1 <= nums.length <= 10^4$
+  > + $0 <= nums[i] <= 10^5$
+  >
+  > 释义：`nums[i]`记录的是最大能跳的格数
+
+  个人思路：从后往前遍历，迭代器`p`依次指向跳跃到末尾的路线，遍历结束时，`p`指向路线的开端，而若开端不是`nums.begin()`，说明从第一个数无法跳到末尾。与贪心算法不同的是，这里`p`遍历的格子是采取最劣情况下的跳跃路线。核心依据：如果能跳到第`i`个数，一定能跳到第`i`个数之前的每一个数。
+  LeetCode上一个比较好（生动）的思路：能量理论，走一格消耗一个能量，如果走到的格子上的数比自己身上携带的能量数更多，则将能量替换为格子上的数。本质上是一个贪心算法。
+  比较正统的贪心算法：
+
+  ```cpp
+  bool canJump(vector<int>& nums) {
+      int k = 0; //标记最远能到达的位置
+      for (int i = 0; i < nums.size(); i++) {
+          if (i > k) return false; //快就快在这里return了
+          k = max(k, i + nums[i]);
+      }
+      return true;
+  }
+  ```
+
++ ==45.Jump Game II== 
+
+  > Your goal is to reach the last index in the minimum number of jumps.
+  >
+  > You can assume that you can always reach the last index.
+
++ ==1388.3n 块披萨==
+
++ ==1567.Maximum Length of Subarray With Positive Product==  getMaxLen
+
+  > Given an array of integers `nums`, find the maximum length of a subarray where the product of all its elements is positive.
+  >
+  > A subarray of an array is a consecutive sequence of zero or more values taken out of that array.
+  >
+  > Return *the maximum length of a subarray with positive product*.
+  >
+  > **Constraints:**
+  >
+  > + $1 <= nums.length <= 10^5$
+  > + $-10^9 <= nums[i] <= 10^9$
+  
+  我写了一个分治的算法，但是出现Runtime Error（本地编译器正确），标程的做法有空再做一次。
+
++ ==1014.Best Sightseeing Pair==  maxScoreSightseeingPair
+
+  > You are given an integer array `values` where values[i] represents the value of the `ith` sightseeing spot. Two sightseeing spots `i` and `j` have a **distance** `j - i` between them.
+  >
+  > The score of a pair (`i < j`) of sightseeing spots is `values[i] + values[j] + i - j`: the sum of the values of the sightseeing spots, minus the distance between them.
+  >
+  > Return *the maximum score of a pair of sightseeing spots*.
+  >
+  > **Constraints:**d
+  >
+  > + $2 <= values.length <= 5 * 10^4$
+  > + $1 <= values[i] <= 1000$​
+  
++ ==122.Best Time to Buy and Sell Stock II== maxProfit
+
+  > You are given an integer array `prices` where `prices[i]` is the price of a given stock on the `ith` day.
+  >
+  > On each day, you may decide to buy and/or sell the stock. You can only hold **at most one** share of the stock at any time. However, you can buy it then immediately sell it on the **same day**.
+  >
+  > Find and return *the **maximum** profit you can achieve*.
+  >
+  > **Constraints:**
+  >
+  > + $1 <= prices.length <= 3 * 10^4$
+  > + $0 <= prices[i] <= 10^4$​
+  
+  个人思路：非常简单。因为严格递增序列中，取第一个数和最后一个数，其差值最大。也就是说，如果数组递增，就不要卖股票；一旦数组没有严格递增，也就是后一天的股价小于等于前一天的，立刻在前一天抛出股票。设计算法时，我们可以假设股票可以当日卖出：当天买当天卖，和完全不购买空过一天是完全等价的。
+  
+  > 因为交易次数不受限，如果可以把所有的上坡全部收集到，一定是利益最大化的。
 
