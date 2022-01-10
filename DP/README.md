@@ -230,7 +230,11 @@ classic.h文件记录了一个经典的问题：最长上升字串。
   > + $2 <= values.length <= 5 * 10^4$
   > + $1 <= values[i] <= 1000$​
   
+<<<<<<< HEAD
 + ==122.Best Time to Buy and Sell Stock II== maxProfit2
+=======
++ ==122.Best Time to Buy and Sell Stock II== maxProfit
+>>>>>>> 38dff0f8fb45258eeef057d9f1d3cef1c18adb87
 
   > You are given an integer array `prices` where `prices[i]` is the price of a given stock on the `ith` day.
   >
@@ -246,6 +250,7 @@ classic.h文件记录了一个经典的问题：最长上升字串。
   个人思路：非常简单。因为严格递增序列中，取第一个数和最后一个数，其差值最大。也就是说，如果数组递增，就不要卖股票；一旦数组没有严格递增，也就是后一天的股价小于等于前一天的，立刻在前一天抛出股票。设计算法时，我们可以假设股票可以当日卖出：当天买当天卖，和完全不购买空过一天是完全等价的。
   
   > 因为交易次数不受限，如果可以把所有的上坡全部收集到，一定是利益最大化的。
+<<<<<<< HEAD
 
 + ==309.Best Time to Buy and Sell Stock with Cooldown== maxProfit3
 
@@ -253,4 +258,6 @@ classic.h文件记录了一个经典的问题：最长上升字串。
   > **Note:** You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before you buy again).
   
   这个系列的题目，有空认真想一想。
+=======
+>>>>>>> 38dff0f8fb45258eeef057d9f1d3cef1c18adb87
 
