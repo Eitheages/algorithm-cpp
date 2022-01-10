@@ -346,17 +346,17 @@ public:
         return res;
     }
 
-    // int maxProfit(vector<int>& prices) {
-    //     int res = 0, cur = INT_MAX;
-    //     for (const int &price: prices)
-    //     {
-    //         res = max(res, price - cur);
-    //         cur = min(cur, price);
-    //     }
-    //     return res;
-    // }
+    int maxProfit1(vector<int>& prices) {
+        int res = 0, cur = INT_MAX;
+        for (const int &price: prices)
+        {
+            res = max(res, price - cur);
+            cur = min(cur, price);
+        }
+        return res;
+    }
 
-    int maxProfit(vector<int>& prices) {
+    int maxProfit2(vector<int>& prices) {
         int pre = prices[0], res = 0;
         for (const int &price: prices)
         {
@@ -366,6 +366,58 @@ public:
         }
         return res;
     }
+
+    int maxProfit3(vector<int>& prices)
+    {
+        int profit = 0; // record the total profit
+        int l = 0, r = 0;
+        for (int i = 1; i < prices.size(); i++)
+        {
+            if (prices[i] >= prices[i-1])
+                r = i;
+            else
+            {
+                int j = i;
+                while (i < prices.size() && prices[i] <= prices[i-1])
+                    i++;
+                if (i == prices.size())
+                    break;
+                if (i-j >= 2)
+                {
+                    profit += prices[r] - prices[l];
+                    l = i - 1;
+                    r = i;
+                }
+                else
+                {
+                    if (r != l)
+                    {
+                        if (prices[j-2] < prices[j] && prices[j-1] < prices[i])
+                            r = i;
+                        else if (prices[j-1] - prices[j-2] < prices[i] - prices[j])
+                        {
+                            profit += prices[j-2] - prices[l];
+                            l = j;
+                            r = i;
+                        }
+                        else
+                        {
+                            profit += prices[j-1] - prices[l];
+                            r = l = i;
+                        }
+                    }
+                    else
+                    {
+                        l = j;
+                        r = i;
+                    }
+                }
+            }
+        }
+        profit += prices[r] - prices[l];
+        return profit;
+    }
+
 
 };
 
