@@ -367,55 +367,91 @@ public:
         return res;
     }
 
-    int maxProfit3(vector<int>& prices)
-    {
-        int profit = 0; // record the total profit
-        int l = 0, r = 0;
-        for (int i = 1; i < prices.size(); i++)
+    // int maxProfit3(vector<int>& prices)
+    // {
+    //     int profit = 0; // record the total profit
+    //     int l = 0, r = 0;
+    //     for (int i = 1; i < prices.size(); i++)
+    //     {
+    //         if (prices[i] >= prices[i-1])
+    //             r = i;
+    //         else
+    //         {
+    //             int j = i;
+    //             while (i < prices.size() && prices[i] <= prices[i-1])
+    //                 i++;
+    //             if (i == prices.size())
+    //                 break;
+    //             if (i-j >= 2)
+    //             {
+    //                 profit += prices[r] - prices[l];
+    //                 l = i - 1;
+    //                 r = i;
+    //             }
+    //             else
+    //             {
+    //                 if (r != l)
+    //                 {
+    //                     if (prices[j-2] < prices[j] && prices[j-1] < prices[i])
+    //                         r = i;
+    //                     else if (prices[j-1] - prices[j-2] < prices[i] - prices[j])
+    //                     {
+    //                         profit += prices[j-2] - prices[l];
+    //                         l = j;
+    //                         r = i;
+    //                     }
+    //                     else
+    //                     {
+    //                         profit += prices[j-1] - prices[l];
+    //                         r = l = i;
+    //                     }
+    //                 }
+    //                 else
+    //                 {
+    //                     l = j;
+    //                     r = i;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     profit += prices[r] - prices[l];
+    //     return profit;
+    // }
+
+    int numberOfArithmeticSlices(vector<int>& nums) {
+        if (nums.size() < 3)
+            return 0;
+        int dp = 0, res = 0;
+        for (int i = 2; i < nums.size(); i++)
         {
-            if (prices[i] >= prices[i-1])
-                r = i;
+            if (dp > 0 && 2*nums[i-1] == nums[i-2] + nums[i])
+                dp++;
+            else if (2*nums[i-1] == nums[i-2] + nums[i])
+                dp = 1;
             else
-            {
-                int j = i;
-                while (i < prices.size() && prices[i] <= prices[i-1])
-                    i++;
-                if (i == prices.size())
-                    break;
-                if (i-j >= 2)
-                {
-                    profit += prices[r] - prices[l];
-                    l = i - 1;
-                    r = i;
-                }
-                else
-                {
-                    if (r != l)
-                    {
-                        if (prices[j-2] < prices[j] && prices[j-1] < prices[i])
-                            r = i;
-                        else if (prices[j-1] - prices[j-2] < prices[i] - prices[j])
-                        {
-                            profit += prices[j-2] - prices[l];
-                            l = j;
-                            r = i;
-                        }
-                        else
-                        {
-                            profit += prices[j-1] - prices[l];
-                            r = l = i;
-                        }
-                    }
-                    else
-                    {
-                        l = j;
-                        r = i;
-                    }
-                }
-            }
+                dp = 0;
+            res += dp;
         }
-        profit += prices[r] - prices[l];
-        return profit;
+        return res;
+    }
+
+    int numDecodings(string s) {
+        int dp1 = s[0] == '0'? 0: 1, dp2 = 0, t = dp1 + dp2;
+        for (int i = 1; i < s.length(); i++)
+        {
+            if (dp1 + dp2 == 0)
+                break;
+            if (s[i] > '0')
+                t = dp1 + dp2;
+            else
+                t = 0;
+            if (s[i-1] == '1' || s[i-1] == '2' && s[i] <= '6')
+                dp2 = dp1;
+            else
+                dp2 = 0;
+            dp1 = t;
+        }
+        return dp1 + dp2;
     }
 
 };

@@ -2,9 +2,10 @@
 
 
 int main() {
-    vector<int> nums = {8,6,4,3,3,2,3,5,8,3,8,2,6};
+    vector<int> nums = {1,2,3,4};
     Solution *p = new Solution;
-    int res = p->maxProfit3(nums);
+    string s = "11106";
+    int res = p->numDecodings(s);
     cout << res << endl;
     return 0;
 }
