@@ -230,11 +230,7 @@ classic.h文件记录了一个经典的问题：最长上升字串。
   > + $2 <= values.length <= 5 * 10^4$
   > + $1 <= values[i] <= 1000$​
   
-<<<<<<< HEAD
 + ==122.Best Time to Buy and Sell Stock II== maxProfit2
-=======
-+ ==122.Best Time to Buy and Sell Stock II== maxProfit
->>>>>>> 38dff0f8fb45258eeef057d9f1d3cef1c18adb87
 
   > You are given an integer array `prices` where `prices[i]` is the price of a given stock on the `ith` day.
   >
@@ -246,11 +242,10 @@ classic.h文件记录了一个经典的问题：最长上升字串。
   >
   > + $1 <= prices.length <= 3 * 10^4$
   > + $0 <= prices[i] <= 10^4$​
-  
+
   个人思路：非常简单。因为严格递增序列中，取第一个数和最后一个数，其差值最大。也就是说，如果数组递增，就不要卖股票；一旦数组没有严格递增，也就是后一天的股价小于等于前一天的，立刻在前一天抛出股票。设计算法时，我们可以假设股票可以当日卖出：当天买当天卖，和完全不购买空过一天是完全等价的。
-  
+
   > 因为交易次数不受限，如果可以把所有的上坡全部收集到，一定是利益最大化的。
-<<<<<<< HEAD
 
 + ==309.Best Time to Buy and Sell Stock with Cooldown== maxProfit3
 
@@ -258,6 +253,42 @@ classic.h文件记录了一个经典的问题：最长上升字串。
   > **Note:** You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before you buy again).
   
   这个系列的题目，有空认真想一想。
-=======
->>>>>>> 38dff0f8fb45258eeef057d9f1d3cef1c18adb87
+  
++ ==413.Arithmetic Slices== numberOfArithmeticSlices
 
+  > An integer array is called arithmetic if it consists of **at least three elements** and if the difference between any two consecutive elements is the same.
+  >
+  > + For example, `[1,3,5,7,9]`, `[7,7,7,7]`, and `[3,-1,-5,-9]` are arithmetic sequences.
+  >
+  > Given an integer array `nums`, return *the number of arithmetic **subarrays** of* `nums`.
+  >
+  > A **subarray** is a contiguous subsequence of the array.
+
+  I only tried once to receive an AC. It's too easy.
+
++ ==91.Decode Ways==
+
+  > A message containing letters from `A-Z` can be **encoded** into numbers using the following mapping:
+  >
+  > ```
+  > 'A' -> "1"
+  > 'B' -> "2"
+  > ...
+  > 'Z' -> "26"
+  > ```
+  >
+  > To **decode** an encoded message, all the digits must be grouped then mapped back into letters using the reverse of the mapping above (there may be multiple ways). For example, `"11106"` can be mapped into:
+  >
+  > + `"AAJF"` with the grouping `(1 1 10 6)`
+  > + `"KJF"` with the grouping `(11 10 6)`
+  >
+  > Note that the grouping `(1 11 06)` is invalid because `"06"` cannot be mapped into `'F'` since `"6"` is different from `"06"`.
+  >
+  > Given a string `s` containing only digits, return *the **number** of ways to **decode** it*.
+  >
+  > The test cases are generated so that the answer fits in a **32-bit** integer.
+  >
+  > **Constraints:**
+  >
+  > + 1 <= s.length <= 100
+  > + `s` contains only digits and may contain leading zero(s).
