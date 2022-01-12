@@ -292,3 +292,15 @@ classic.h文件记录了一个经典的问题：最长上升字串。
   >
   > + 1 <= s.length <= 100
   > + `s` contains only digits and may contain leading zero(s).
+  
++ ==264.Ugly Number II== nthUglyNumber
+
+  > An **ugly number** is a positive integer whose prime factors are limited to `2`, `3`, and `5`.
+  >
+  > Given an integer `n`, return *the* `nth` ***ugly number***.
+
+  解法：合并三个严格递增数组：被2整除，被3整除，被5整除；运用三指针。
+
++ ==96.Unique Binary Search Trees== numTrees
+
+  > Given an integer `n`, return *the number of structurally unique **BST'**s (binary search trees) which has exactly* `n` *nodes of unique values from* `1` *to* `n`.

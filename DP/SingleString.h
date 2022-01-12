@@ -7,6 +7,20 @@ using namespace std;
 class Solution
 {
 public:
+    template<class T>
+    T threeMin(T a, T b, T c)
+    {
+        T tmp = a > b? b: a;
+        return tmp > c? c: tmp;
+    }
+
+    template<class T>
+    T threeMax(T a, T b, T c)
+    {
+        T tmp = a < b? b: a;
+        return tmp < c? c: tmp;
+    }
+
     int minSwap(vector<int> &nums1, vector<int> &nums2)
     {
         vector<int> a = {1};
@@ -452,6 +466,23 @@ public:
             dp1 = t;
         }
         return dp1 + dp2;
+    }
+    
+    int nthUglyNumber(int n) {
+        vector<int> dp(n, 1);
+        int p2 = 0, p3 = 0, p5 = 0;
+        for (int i = 1; i < n; i++)
+        {
+            int num1 = dp[p2]*2, num2 = dp[p3]*3, num3 = dp[p5]*5;
+            dp[i] = threeMin<int>(num1, num2, num3);
+            if (dp[i] == num1)
+                p2++;
+            if (dp[i] == num2)
+                p3++;
+            if (dp[i] == num3)
+                p5++;
+        }
+        return dp[n-1];
     }
 
 };
