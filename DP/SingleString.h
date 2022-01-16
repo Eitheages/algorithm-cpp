@@ -4,21 +4,23 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+namespace A
+{
 class Solution
 {
 public:
-    template<class T>
+    template <class T>
     T threeMin(T a, T b, T c)
     {
-        T tmp = a > b? b: a;
-        return tmp > c? c: tmp;
+        T tmp = a > b ? b : a;
+        return tmp > c ? c : tmp;
     }
 
-    template<class T>
+    template <class T>
     T threeMax(T a, T b, T c)
     {
-        T tmp = a < b? b: a;
-        return tmp < c? c: tmp;
+        T tmp = a < b ? b : a;
+        return tmp < c ? c : tmp;
     }
 
     int minSwap(vector<int> &nums1, vector<int> &nums2)
@@ -126,7 +128,7 @@ public:
     {
         int temp1(0), res(INT_MIN);
         int min_sum(INT_MAX), sum(0), temp2(0);
-        for (const int &val: nums)
+        for (const int &val : nums)
         {
             temp1 = max(temp1 + val, val);
             res = max(res, temp1);
@@ -134,47 +136,10 @@ public:
             min_sum = min(temp2, min_sum);
             sum += val;
         }
-        return res > 0? max(res, sum-min_sum): res;
+        return res > 0 ? max(res, sum - min_sum) : res;
     }
 
-    vector<int> getMaxMatrix(vector<vector<int>>& matrix) {
-        vector<int> dp(matrix[0].size());
-        vector<int> res;
-        int temp(0), max_sum(INT_MIN);
-        for (int i = 0; i < matrix.size(); i++)
-        {
-            // memset(&(*dp.begin()), 0, sizeof(dp));
-            for (int &val: dp)
-                val = 0;
-            for (int j = i; j < matrix.size(); j++)
-            {
-                int r1(i), c1(0), r2(j), c2(0);
-                for (int k = 0; k < matrix[0].size(); k++)
-                {
-                    dp[k] = dp[k] + matrix[j][k];
-                    if (temp <= 0)
-                    {
-                        temp = dp[k];
-                        c1 = k;
-                    }
-                    else
-                    {
-                        temp += dp[k];
-                    }
-                    if (temp > max_sum)
-                    {
-                        max_sum = temp;
-                        c2 = k;
-                        res = {r1, c1, r2, c2};
-                    }
-                }
-                temp = 0;
-            }
-        }
-        return res;
-    }
-
-    int maxSumSubmatrix(vector<vector<int>>& matrix, int k)
+    int maxSumSubmatrix(vector<vector<int>> &matrix, int k)
     {
         int res(INT_MIN);
         int m(matrix.size()), n(matrix[0].size());
@@ -191,7 +156,7 @@ public:
                 //幸好只需要返回最小的和，不用返回子式的具体位置
                 vector<int> sums = {0};
                 int s(0);
-                for (const int &val: dp)
+                for (const int &val : dp)
                 {
                     //计算遍历前缀和
                     s += val;
@@ -208,7 +173,8 @@ public:
                     if (r != sums.size())
                         res = max(res, s - sums[r]);
                     // 维护sums为一个递增数列
-                    l = 0; r = sums.size();
+                    l = 0;
+                    r = sums.size();
                     while (l < r)
                     {
                         int m = (l + r) >> 1;
@@ -224,7 +190,8 @@ public:
         return res;
     }
 
-    int rob(vector<int>& nums) {
+    int rob(vector<int> &nums)
+    {
         vector<int> dp = {0, 0, nums[0]};
         for (auto it = nums.begin() + 1; it != nums.end(); it++)
         {
@@ -236,12 +203,12 @@ public:
         return max(dp[1], dp[2]);
     }
 
-
-    int deleteAndEarn(vector<int>& nums) {
+    int deleteAndEarn(vector<int> &nums)
+    {
         const int N = int(1e4);
-        vector<int> bucket(N+1);
-        for (const int &val: nums)
-            bucket[val] ++;
+        vector<int> bucket(N + 1);
+        for (const int &val : nums)
+            bucket[val]++;
         int p = 0, q = 0;
         for (int i = 1; i <= N; i++)
         {
@@ -252,7 +219,8 @@ public:
         return max(p, q);
     }
 
-    bool canJump(vector<int>& nums) {
+    bool canJump(vector<int> &nums)
+    {
         auto p = nums.end() - 1, q = p;
         while ((q--) != nums.begin())
         {
@@ -289,15 +257,14 @@ public:
             if (l == r)
             {
                 r = max(rm, nums[r] + r);
-                res ++;
-                if (r >= nums.size()-1)
+                res++;
+                if (r >= nums.size() - 1)
                     break;
             }
         }
         return res;
     }
 
-    
     // struct Status
     // {
     //     int neg_cnt, l_length, r_length, length, result;
@@ -324,7 +291,7 @@ public:
     //     int m = (l + r) >> 1;
     //     return pushup(get(nums, l, m), get(nums, m+1, r));
     // }
-    
+
     // int getMaxLen(vector<int>& nums) {
     //     int res = 0;
     //     int i = 0;
@@ -348,11 +315,11 @@ public:
     //     return res;
     // }
 
-    int maxScoreSightseeingPair(const vector<int>& values)
+    int maxScoreSightseeingPair(const vector<int> &values)
     {
         int res = INT_MIN;
         int cur = 0;
-        for (const int &val: values)
+        for (const int &val : values)
         {
             res = max(res, cur + val - 1);
             cur = max(cur - 1, val);
@@ -360,9 +327,10 @@ public:
         return res;
     }
 
-    int maxProfit1(vector<int>& prices) {
+    int maxProfit1(vector<int> &prices)
+    {
         int res = 0, cur = INT_MAX;
-        for (const int &price: prices)
+        for (const int &price : prices)
         {
             res = max(res, price - cur);
             cur = min(cur, price);
@@ -370,13 +338,14 @@ public:
         return res;
     }
 
-    int maxProfit2(vector<int>& prices) {
+    int maxProfit2(vector<int> &prices)
+    {
         int pre = prices[0], res = 0;
-        for (const int &price: prices)
+        for (const int &price : prices)
         {
             if (price > pre)
                 res += price - pre;
-            pre = price;            
+            pre = price;
         }
         return res;
     }
@@ -432,15 +401,16 @@ public:
     //     return profit;
     // }
 
-    int numberOfArithmeticSlices(vector<int>& nums) {
+    int numberOfArithmeticSlices(vector<int> &nums)
+    {
         if (nums.size() < 3)
             return 0;
         int dp = 0, res = 0;
         for (int i = 2; i < nums.size(); i++)
         {
-            if (dp > 0 && 2*nums[i-1] == nums[i-2] + nums[i])
+            if (dp > 0 && 2 * nums[i - 1] == nums[i - 2] + nums[i])
                 dp++;
-            else if (2*nums[i-1] == nums[i-2] + nums[i])
+            else if (2 * nums[i - 1] == nums[i - 2] + nums[i])
                 dp = 1;
             else
                 dp = 0;
@@ -449,8 +419,9 @@ public:
         return res;
     }
 
-    int numDecodings(string s) {
-        int dp1 = s[0] == '0'? 0: 1, dp2 = 0, t = dp1 + dp2;
+    int numDecodings(string s)
+    {
+        int dp1 = s[0] == '0' ? 0 : 1, dp2 = 0, t = dp1 + dp2;
         for (int i = 1; i < s.length(); i++)
         {
             if (dp1 + dp2 == 0)
@@ -459,7 +430,7 @@ public:
                 t = dp1 + dp2;
             else
                 t = 0;
-            if (s[i-1] == '1' || s[i-1] == '2' && s[i] <= '6')
+            if (s[i - 1] == '1' || s[i - 1] == '2' && s[i] <= '6')
                 dp2 = dp1;
             else
                 dp2 = 0;
@@ -467,13 +438,14 @@ public:
         }
         return dp1 + dp2;
     }
-    
-    int nthUglyNumber(int n) {
+
+    int nthUglyNumber(int n)
+    {
         vector<int> dp(n, 1);
         int p2 = 0, p3 = 0, p5 = 0;
         for (int i = 1; i < n; i++)
         {
-            int num1 = dp[p2]*2, num2 = dp[p3]*3, num3 = dp[p5]*5;
+            int num1 = dp[p2] * 2, num2 = dp[p3] * 3, num3 = dp[p5] * 5;
             dp[i] = threeMin<int>(num1, num2, num3);
             if (dp[i] == num1)
                 p2++;
@@ -482,9 +454,11 @@ public:
             if (dp[i] == num3)
                 p5++;
         }
-        return dp[n-1];
+        return dp[n - 1];
     }
 
 };
+
+}
 
 #endif

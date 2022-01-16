@@ -127,7 +127,6 @@ classic.h文件记录了一个经典的问题：最长上升字串。
   思路：只看图，来自美国站大佬 [Solution](https://assets.leetcode.com/users/motorix/image_1538888300.png)
   极端情况：对于和最大的子数组（非环形），它非正当且仅当数组中没有正数，并且此时，和最大的子数组等于最大的那一个数，和最小的子数组等于整个数组。于是可知：当`max_num`非正时，应该无条件取`max_num`，因为和最小的子数组包含了所有的数。
 
-+ ==面试题 17.24. 最大子矩阵== getMaxMatrix
 
 + ==363.矩形区域不超过 K 的最大数值和== maxSumSubmatrix
 
@@ -304,3 +303,89 @@ classic.h文件记录了一个经典的问题：最长上升字串。
 + ==96.Unique Binary Search Trees== numTrees
 
   > Given an integer `n`, return *the number of structurally unique **BST'**s (binary search trees) which has exactly* `n` *nodes of unique values from* `1` *to* `n`.
+
+## 矩阵类(Matrix)
+
++ ==931.Minimum Falling Path Sum== minFallingPathSum
+
+  > Given an `n x n` array of integers `matrix`, return *the **minimum sum** of any **falling path** through* `matrix`.
+  >
+  > A **falling path** starts at any element in the first row and chooses the element in the next row that is either directly below or diagonally left/right. Specifically, the next element from position `(row, col)` will be `(row + 1, col - 1)`, `(row + 1, col)`, or `(row + 1, col + 1)`.
+  >
+  > **Constraints:**
+  >
+  > + `n == matrix.length == matrix[i].length`
+  > + `1 <= n <= 100`
+  > + `-100 <= matrix[i][j] <= 100`
+
++ ==120.Triangle== minimumTotal
+
+  > Given a `triangle` array, return *the minimum path sum from top to bottom*.
+  >
+  > For each step, you may move to an adjacent number of the row below. More formally, if you are on index `i` on the current row, you may move to either index `i` or index `i + 1` on the next row
+  
++ ==1314.Matrix Block Sum== matrixBlockSum
+
+  > Given a `m x n` matrix `mat` and an integer `k`, return *a matrix* `answer` *where each* `answer[i][j]` *is the sum of all elements* `mat[r][c]` *for*:
+  >
+  > + `i - k <= r <= i + k,`
+  > + `j - k <= c <= j + k`, and
+  > + `(r, c)` is a valid position in the matrix.
+
++ ==304.Range Sum Query 2D - Immutable== NumMatrix sumRegion
+
+  > Given a 2D matrix `matrix`, handle multiple queries of the following type:
+  >
+  > + Calculate the **sum** of the elements of `matrix` inside the rectangle defined by its **upper left corner** `(row1, col1)` and **lower right corner** `(row2, col2)`.
+  >
+  > Implement the NumMatrix class:
+  >
+  > + `NumMatrix(int[][] matrix)` Initializes the object with the integer matrix `matrix`.
+  > + `int sumRegion(int row1, int col1, int row2, int col2)` Returns the **sum** of the elements of `matrix` inside the rectangle defined by its **upper left corner** `(row1, col1)` and **lower right corner** `(row2, col2)`.
+  
++ ==62.Unique Paths== uniquePaths
+
+  > There is a robot on an `m x n` grid. The robot is initially located at the **top-left corner** (i.e., `grid[0][0]`). The robot tries to move to the **bottom-right corner** (i.e., `grid[m - 1][n - 1]`). The robot can only move either down or right at any point in time.
+  >
+  > Given the two integers `m` and `n`, return *the number of possible unique paths that the robot can take to reach the bottom-right corner*.
+  >
+  > The test cases are generated so that the answer will be less than or equal to $2 * 10^9$​.
+  >
+  > **Constraints:**
+  >
+  > + `1 <= m, n <= 100`
+  
++ ==63.Unique Paths II== uniquePathsWithObstacles
+
+  > A robot is located at the top-left corner of a `m x n` grid (marked 'Start' in the diagram below).
+  >
+  > The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
+  >
+  > Now consider if some obstacles are added to the grids. How many unique paths would there be?
+  >
+  > An obstacle and space is marked as `1` and `0` respectively in the grid.
+
+  ```cpp
+  class Solution {
+  public:
+      int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+          vector<vector<int>> &mat = obstacleGrid;
+          const int M = mat.size(), N = mat[0].size();
+          vector<int> dp(N, 0);
+          dp[0] = (mat[0][0] == 0);
+          for (int i = 0; i < M; i++)
+          {
+              for (int j = 0; j < N; j++)
+              {
+                  if (mat[i][j] == 1)
+                      dp[j] = 0;
+                  else if (j > 0 && mat[i][j-1] == 0 )
+                      dp[j] += dp[j-1];
+              }
+          }
+          return dp.back();
+      }
+  };
+  ```
+
++ ==面试题 17.24. 最大子矩阵== getMaxMatrix

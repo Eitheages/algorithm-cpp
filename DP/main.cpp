@@ -1,11 +1,10 @@
 #include "SingleString.h"
-
+#include "Matrix.h"
 
 int main() {
-    vector<int> nums = {1,2,3,4};
-    Solution *p = new Solution;
-    string s = "11106";
-    int res = p->nthUglyNumber(10);
-    cout << res << endl;
+    vector<vector<int>> a{{0,0,0}, {0,1,0}, {0,0,0}};
+    B::Solution *p = new B::Solution;
+    int res = p->uniquePathsWithObstacles(a);
+    printf("%d\n", res);
     return 0;
 }
