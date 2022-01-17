@@ -151,6 +151,42 @@ public:
         }
         return dp.back();
     }
+
+    int minPathSum(vector<vector<int>>& grid) {
+        const int M = grid.size(), N = grid[0].size();
+        vector<int> dp(N, INT_MAX);
+        dp[0] = 0;
+        for (int i = 0; i < M; i++)
+        {
+            dp[0] += grid[i][0];
+            for (int j = 1; j < N; j++)
+                dp[j] = min(dp[j-1], dp[j]) + grid[i][j];
+        }
+        return dp[N-1];
+    }
+
+    int maximalSquare(vector<vector<char>>& matrix) {
+        const int M = matrix.size(), N = matrix[0].size();
+        vector<int> dp(N, 0);
+        dp[0] = (matrix[0][0] == '1');
+        int pre = 0, res = 0;
+        for (int i = 0; i < M; i++)
+        {
+            pre = dp[0];
+            dp[0] = (matrix[i][0] == '1');
+            for (int j = 1; j < N; j++)
+            {
+                int tmp = dp[j];
+                if (matrix[i][j] == '1')
+                    dp[j] = min(dp[j-1], min(dp[j], pre)) + 1;
+                else
+                    dp[j] = 0;
+                pre = tmp;
+            }
+            res = max(*max_element(dp.begin(), dp.end()), res);
+        }
+        return res*res;
+    }
 };
 
 }

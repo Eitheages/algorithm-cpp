@@ -389,3 +389,22 @@ classic.h文件记录了一个经典的问题：最长上升字串。
   ```
 
 + ==面试题 17.24. 最大子矩阵== getMaxMatrix
+
++ ==64.Minimum Path Sum== minPathSum
+
+  > Given a `m x n` `grid` filled with non-negative numbers, find a path from top left to bottom right, which minimizes the sum of all numbers along its path.
+  >
+  > **Note:** You can only move either down or right at any point in time.
+
++ ==221.Maximal Square== maximalSquare   **attention!!**
+
+  > Given an `m x n` binary `matrix` filled with `0`'s and `1`'s, *find the largest square containing only* `1`'s *and return its area*.
+
+  `dp[i][j]` is defined to be the max size of the square that contains `matrix[i][j]`. Thus we have:
+  $$
+  \mathrm{dp}\left[ i \right] \left[ j \right] =\begin{cases}
+  	0&		\mathrm{matrix}\left[ i \right] \left[ j \right] =0\\
+  	\min \left( \mathrm{dp}\left[ i-1 \right] \left[ j-1 \right] , \mathrm{dp}\left[ i-1 \right] \left[ j \right] , \mathrm{dp}\left[ i \right] \left[ j-1 \right] \right) +1&		matrix\left[ i \right] \left[ j \right] =1\\
+  \end{cases}
+  $$
+  
