@@ -35,10 +35,10 @@ Polynomial::Polynomial(Polynomial &&source): maxexp(source.maxexp), head(new Nod
 
 Polynomial::~Polynomial()
 {
-    Node* t = head;
+    Node* t = head, *pre;
     do
     {
-        Node* pre = t;
+        pre = t;
         t = t->next;
         delete pre;
     } while (t);
