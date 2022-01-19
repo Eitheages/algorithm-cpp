@@ -87,7 +87,27 @@ classic.h文件记录了一个经典的问题：最长上升字串。
   因而给出状态转移方程：
   ![如图](https://pic.leetcode-cn.com/Figures/790/possible.png)
 
-  
++ ==300.Longest Increasing Subsequence== lengthOfLIS
+
+  > Given an integer array nums, return the length of the longest strictly increasing subsequence.
+  >
+  > A subsequence is a sequence that can be derived from an array by deleting some or no elements without changing the order of the remaining elements. For example, [3,6,2,7] is a subsequence of the array [0,3,1,6,2,2,7].
+  >
+  > **Constraints:**
+  >
+  > + $1 <= nums.length <= 2500$
+  > + $-10^4 <= nums[i] <= 10^4$​
+
++ ==376.Wiggle Subsequence== wiggleMaxLength **attention!!**
+
+  > A **wiggle sequence** is a sequence where the differences between successive numbers strictly alternate between positive and negative. The first difference (if one exists) may be either positive or negative. A sequence with one element and a sequence with two non-equal elements are trivially wiggle sequences.
+  >
+  > + For example, `[1, 7, 4, 9, 2, 5]` is a **wiggle sequence** because the differences `(6, -3, 5, -7, 3)` alternate between positive and negative.
+  > + In contrast, `[1, 4, 7, 2, 5]` and `[1, 7, 4, 5, 5]` are not wiggle sequences. The first is not because its first two differences are positive, and the second is not because its last difference is zero.
+  >
+  > A **subsequence** is obtained by deleting some elements (possibly zero) from the original sequence, leaving the remaining elements in their original order.
+  >
+  > Given an integer array `nums`, return *the length of the longest **wiggle subsequence** of* `nums`.
 
 + ==673.最长递增子序列的个数== findNumberOfLIS
 
@@ -163,7 +183,7 @@ classic.h文件记录了一个经典的问题：最长上升字串。
   > + $1 <= nums.length <= 2 * 10^4$
   > + $1 <= nums[i] <= 10^4$​
 
-  个人思路：桶排序。耗时还以外的短，就是耗空间。
+  个人思路：桶排序。耗时还意外地短，就是耗空间。
 
 + ==55.Jump Game==  canJump
 
@@ -303,6 +323,7 @@ classic.h文件记录了一个经典的问题：最长上升字串。
 + ==96.Unique Binary Search Trees== numTrees
 
   > Given an integer `n`, return *the number of structurally unique **BST'**s (binary search trees) which has exactly* `n` *nodes of unique values from* `1` *to* `n`.
+  
 
 ## 矩阵类(Matrix)
 
@@ -402,9 +423,68 @@ classic.h文件记录了一个经典的问题：最长上升字串。
 
   `dp[i][j]` is defined to be the max size of the square that contains `matrix[i][j]`. Thus we have:
   $$
-  \mathrm{dp}\left[ i \right] \left[ j \right] =\begin{cases}
-  	0&		\mathrm{matrix}\left[ i \right] \left[ j \right] =0\\
-  	\min \left( \mathrm{dp}\left[ i-1 \right] \left[ j-1 \right] , \mathrm{dp}\left[ i-1 \right] \left[ j \right] , \mathrm{dp}\left[ i \right] \left[ j-1 \right] \right) +1&		matrix\left[ i \right] \left[ j \right] =1\\
+  dp\left[ i \right] \left[ j \right] =\begin{cases}
+  	0&		matrix\left[ i \right] \left[ j \right] =0\\
+  	\min \left(dp\left[ i-1 \right] \left[ j-1 \right] , dp\left[ i-1 \right] \left[ j \right] ,dp\left[ i \right] \left[ j-1 \right] \right) +1&		matrix\left[ i \right] \left[ j \right] =1\\
+  \end{cases}
+  $$
+
+
+
+## 双串(Double String)
+
+Most of the time, $\mathrm{dp}[i][j]$ is determined by $dp[i+1][j]$, $dp[i][j-1]$ and $dp[i+1][j-1]$.
+As the picture shows:
+![picture alt](https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2020/08/06/2-2-2.png)
+
+
+
++ ==5.Longest Palindromic Substring== longestPalindrome  **attention!!**
+
+  > Given a string `s`, return *the longest palindromic substring* in `s`.
+  >
+  > **Constraints:**
+  >
+  > + `1 <= s.length <= 1000`
+  > + `s` consist of only digits and English letters.
+
++ ==516.Longest Palindromic Subsequence== longestPalindromeSubseq **attention!!**
+
+  > Given a string `s`, find *the longest palindromic **subsequence**'s length in* `s`.
+  >
+  > A **subsequence** is a sequence that can be derived from another sequence by deleting some or no elements without changing the order of the remaining elements.
+  >
+  > **Constraints:**
+  >
+  > + `1 <= s.length <= 1000`
+  > + `s` consists only of lowercase English letters.
+  
+  In a common solution, $dp[i][j]$​​​​​ is defined as the length of the longest palindromic subsequence of `s[i: j+1]`
+  In a special solution, the original string `s` is reversed to be `ss`, and the next step is to find the length of the longest common subsequence of `s` and `ss`. It turns out to be Problem 1143.
+  
++ ==1143.Longest Common Subsequence== longestCommonSubsequence  **attention!!**
+
+  > Given two strings `text1` and `text2`, return *the length of their longest **common subsequence**.* If there is no **common subsequence**, return `0`.
+  >
+  > A **subsequence** of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.
+  >
+  > + For example, `"ace"` is a subsequence of `"abcde"`.
+  >
+  > A **common subsequence** of two strings is a subsequence that is common to both strings.
+  >
+  > **Constraints:**
+  >
+  > + `1 <= text1.length, text2.length <= 1000`
+  > + `text1` and `text2` consist of only lowercase English characters.
+
+  Define $dp[i][j]$​​​ as the length of the longest common subsequence of `s1[0: i]` and `s2[0: j]` (the uses of [i: j] is borrowed from Python). We have State Transition Equation:
+  $$
+  dp[i][j]=
+  \begin{cases}
+      dp[i-1][j-1]+1 & s1[i-1]=s2[j-1]\\
+      \max\{dp[i-1][j], dp[i][j-1]\} & s1[i-1]\not= s2[j-1]
   \end{cases}
   $$
   
++  
+

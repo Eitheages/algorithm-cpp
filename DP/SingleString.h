@@ -457,6 +457,44 @@ public:
         return dp[n - 1];
     }
 
+    int lengthOfLIS(vector<int>& nums) {
+        const int N = nums.size();
+        vector<int> dp(N, 1);
+        for (int i = 1; i < N; i++)
+            for (int j = 0; j < i; j++)
+                if (nums[i] > nums[j])
+                    dp[i] = max(dp[i], dp[j]+1);
+        return *max_element(dp.begin(), dp.end());
+    }
+
+    int wiggleMaxLength(vector<int>& nums) {
+        const int N = nums.size();
+        vector<int> dp(N, 1);
+        //1: the next difference shoule be positive; -1: negtive; 0: both are ok
+        vector<short> state(N, 0);
+        for (int i = 1; i < N; i++)
+        {
+            for (int j = 0; j < i; j++)
+            {
+                if (nums[j] == nums[i])
+                    continue;
+                if (state[j] == 0 || state[j] == 1 && nums[j] < nums[i] || state[j] == -1 && nums[j] > nums[i])
+                {
+                    if (dp[j]+1 > dp[i])
+                    {
+                        dp[i] = dp[j] + 1;
+                        state[i] = (nums[j] > nums[i])? 1: -1;
+                    }
+                    else if (dp[j]+1 == dp[i])
+                    {
+                        if (state[i] == 1 && nums[j] < nums[i] || state[i] == -1 && nums[j] > nums[i])
+                            state[i] == 0;
+                    }
+                }
+            }
+        }
+        return *max_element(dp.begin(), dp.end());
+    }
 };
 
 }

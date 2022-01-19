@@ -1,10 +1,11 @@
 #include "SingleString.h"
 #include "Matrix.h"
+#include "DoubleString.h"
 
 int main() {
-    vector<vector<int>> a{{0,0,0}, {0,1,0}, {0,0,0}};
-    B::Solution *p = new B::Solution;
-    int res = p->uniquePathsWithObstacles(a);
-    printf("%d\n", res);
+    vector<int> nums = {3,3,3,2,5};
+    A::Solution *p = new A::Solution;
+    int res = p->wiggleMaxLength(nums);
+    cout << res << endl;
     return 0;
 }
