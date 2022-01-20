@@ -95,6 +95,74 @@ public:
     //     return dp[N][N];
     // }
 
+    bool isSubsequence(string s, string t)
+    {
+        const int N = t.length();
+        vector<vector<int>> dp(N+1, vector<int>(26));
+        for (int i = N; i >= 0; --i)
+        {
+            for (int j = 0; j < 26; ++j)
+            {
+                if (i == N)
+                {
+                    dp[i][j] = N;
+                    continue;
+                }
+                if (t[i] == j + 'a')
+                    dp[i][j] = i;
+                else
+                    dp[i][j] = dp[i+1][j];
+            }
+        }
+        int p1 = 0, p2 = 0;
+        while (p1 < s.length())
+        {
+            p2 = dp[p2][s[p1++] - 'a'] + 1;
+            if (p2 == N + 1)
+                return 0;
+        }
+        return 1;
+    }
+
+    int longestCommonSubsequence(string text1, string text2) {
+        const int M = text1.length();
+        const int N = text2.length();
+        vector<vector<int>> dp(M+1, vector<int>(N+1));
+        for (int i = 1; i <= M; ++i)
+        {
+            for (int j = 1; j <= N; ++j)
+            {
+                if (text1[i-1] == text2[j-1])
+                    dp[i][j] = dp[i-1][j-1] + 1;
+                else
+                    dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+            }
+        }
+        return dp[M][N];
+    }
+
+    int minDistance(string word1, string word2) {
+        const int M = word1.length(), N = word2.length();
+        vector<vector<int>> dp(M+1, vector<int>(N+1));
+        for (int i = 0; i <= M; ++i)
+        {
+            if (i == 0)
+            {
+                for (int j = 0; j <= N; ++j)
+                    dp[i][j] = j;
+                continue;
+            }
+            dp[i][0] = i;
+            for (int j = 1; j <= N; ++j)
+            {
+                if (word1[i-1] == word2[j-1])
+                    dp[i][j] = dp[i-1][j-1];
+                else
+                    dp[i][j] = 1 + min(dp[i-1][j-1], min(dp[i][j-1], dp[i-1][j]));
+            }
+        }
+        return dp[M][N];
+    }
 };
 
 }
