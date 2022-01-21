@@ -109,6 +109,8 @@ classic.h文件记录了一个经典的问题：最长上升字串。
   >
   > Given an integer array `nums`, return *the length of the longest **wiggle subsequence** of* `nums`.
 
+  Note: Define $up[i]$​​ as the length of the longest wiggle subsequence of `nums[0: i]`, plus which, the end two number most be increasing; $down[i]$​​, on the contrary, is restricted to end with two decreasing number. An important point is that the subsequence don't have to end up with `nums[i-1]`.
+
 + ==673.最长递增子序列的个数== findNumberOfLIS
 
   > 给定一个未排序的整数数组，找到最长**严格**递增子序列的个数。
@@ -221,7 +223,7 @@ classic.h文件记录了一个经典的问题：最长上升字串。
 
 + ==1388.3n 块披萨==
 
-+ ==1567.Maximum Length of Subarray With Positive Product==  getMaxLen
++ ==1567.Maximum Length of Subarray With Positive Product==  getMaxLen  **attention!!**
 
   > Given an array of integers `nums`, find the maximum length of a subarray where the product of all its elements is positive.
   >
@@ -486,5 +488,54 @@ As the picture shows:
   \end{cases}
   $$
   
-+  
++ ==392.Is Subsequence== isSubsequence
+
+  > Given two strings `s` and `t`, return `true` *if* `s` *is a **subsequence** of* `t`*, or* `false` *otherwise*.
+
+  Two important solutions:
+
+  1. Two Pointers. It's easy to understand.
+
+     ```cpp
+     bool isSubsequence(string s, string t) {
+         int i = 0, j = 0;
+         while (i < s.length())
+         {
+             char tmp = s[i];
+             while (j < t.length() && t[j] != tmp)
+                 j++;
+             if (j == t.length())
+                 return 0;
+             else
+                 j++;
+             i++;
+         }
+         return 1;
+     }
+     ```
+
+  2. Dynamic Programming. Though "two-pointers" is easy to understand, when dealing with an array of `s`, the time may be wasting. Therefore, preprocessing string `t` is a good idea.
+     We define $dp[i][j]$​​ as the first place that character $j$​​ shows up after `t[i]`. To initalize, obviously, $dp[i][t[i]]$​​ equals `i`. We have:
+     $$
+     dp[i][j]=
+     \begin{cases}
+     i & t[i]=j\\
+     dp[i+1][j] & t[i] \not= j
+     \end{cases}
+     $$
+  
++ ==72.Edit Distance== minDistance  **attention!!**
+
+  > Given two strings `word1` and `word2`, return *the minimum number of operations required to convert `word1` to `word2`*.
+  >
+  > You have the following three operations permitted on a word:
+  >
+  > + Insert a character
+  > + Delete a character
+  > + Replace a character
+  >
+  > **Constraints:**
+  >
+  > + `0 <= word1.length, word2.length <= 500`
+  > + `word1` and `word2` consist of lowercase English letters.
 
