@@ -350,56 +350,17 @@ public:
         return res;
     }
 
-    // int maxProfit3(vector<int>& prices)
-    // {
-    //     int profit = 0; // record the total profit
-    //     int l = 0, r = 0;
-    //     for (int i = 1; i < prices.size(); i++)
-    //     {
-    //         if (prices[i] >= prices[i-1])
-    //             r = i;
-    //         else
-    //         {
-    //             int j = i;
-    //             while (i < prices.size() && prices[i] <= prices[i-1])
-    //                 i++;
-    //             if (i == prices.size())
-    //                 break;
-    //             if (i-j >= 2)
-    //             {
-    //                 profit += prices[r] - prices[l];
-    //                 l = i - 1;
-    //                 r = i;
-    //             }
-    //             else
-    //             {
-    //                 if (r != l)
-    //                 {
-    //                     if (prices[j-2] < prices[j] && prices[j-1] < prices[i])
-    //                         r = i;
-    //                     else if (prices[j-1] - prices[j-2] < prices[i] - prices[j])
-    //                     {
-    //                         profit += prices[j-2] - prices[l];
-    //                         l = j;
-    //                         r = i;
-    //                     }
-    //                     else
-    //                     {
-    //                         profit += prices[j-1] - prices[l];
-    //                         r = l = i;
-    //                     }
-    //                 }
-    //                 else
-    //                 {
-    //                     l = j;
-    //                     r = i;
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     profit += prices[r] - prices[l];
-    //     return profit;
-    // }
+    int maxProfit4(vector<int>& prices, int fee)
+    {
+        int cash = 0, hold = -prices[0];
+        for (int i = 1, N = prices.size(); i < N; ++i)
+        {
+            cash = max(cash, hold + prices[i] - fee);
+            hold = max(hold, cash - prices[i]);
+        }
+        return cash;
+    }
+
 
     int numberOfArithmeticSlices(vector<int> &nums)
     {
@@ -495,6 +456,26 @@ public:
         }
         return *max_element(dp.begin(), dp.end());
     }
+
+    int coinChange(vector<int>& coins, int amount) {
+        vector<int> dp(amount+1, -1);
+        dp[0] = 0;
+        for (int i = 1; i <= amount; ++i)
+        {
+            for (const int &coin: coins)
+            {
+                if (i >= coin && dp[i-coin] != -1)
+                    dp[i] = dp[i] == -1? dp[i-coin]+1: min(dp[i], dp[i-coin]+1);
+            }
+        }
+        return dp[amount];
+    }
+
+    int change(vector<int> &coins, int amount)
+    {
+        return 0;
+    }
+
 };
 
 }
