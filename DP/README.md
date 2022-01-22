@@ -275,6 +275,52 @@ classic.h文件记录了一个经典的问题：最长上升字串。
   
   这个系列的题目，有空认真想一想。
   
++ ==714.Best Time to Buy and Sell Stock with Transaction Fee== maxProfit4
+
+  > You are given an array `prices` where `prices[i]` is the price of a given stock on the `ith` day, and an integer `fee` representing a transaction fee.
+  >
+  > Find the maximum profit you can achieve. You may complete as many transactions as you like, but you need to pay the transaction fee for each transaction.
+  >
+  > **Note:** You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before you buy again).
+  >
+  > **Constraints:**
+  >
+  > + $1 <= prices.length <= 5 * 10^4$
+  > + $1 <= prices[i] < 5 * 10^4$
+  > + $0 <= fee < 5 * 10^4$​
+
+  A *Time Limit Exceeded* solution can be seen on LeetCode.
+
+  This type of problem have common solution:
+
+  + define $dp[i][0]$​ as the maxmum profit we could have at the end of the `i`-th day if we didn't have a share of stock, and $dp[i][1]$ as the maxmum profit we could have if we owned a share of stock.
+
+  + Considering the state transition from `i`-th day to `i+1`-th day. We got equations:
+    $$
+    dp[i+1][0] = \max\{dp[i][0], dp[i][1]+prices[i+1]-fee\}\\
+    dp[i+1][1] = \max\{dp[i+1][0], dp[i][0]-prices[i+1]\}
+    $$
+
+  + Initalization: $dp[0][0]$ = 0, $dp[0][1]=-prices[0]$.
+
+  + To optimize the space complexity, we maintain `cash` as $dp[i][0]$​​ and `hold` as $dp[i][1]$​​.
+
+  + A small detail:
+    When maintaining `cash` and `hold`, we have:
+
+    ```cpp
+    int pre_cash = cash;
+    cash = max(pre_cash, hold + prices[i] - fee);
+    hold = max(hold, pre_cash - prices[i]);
+    ```
+
+    However, this code block can be optimized. Notice that cooldown is not existed, thus we can transite `hold` from just the `cash` **today**. The code are simplified:
+
+    ```cpp
+    cash = max(cash, hold + prices[i] - fee);
+    hold = max(hold, cash - prices[i]);
+    ```
+
 + ==413.Arithmetic Slices== numberOfArithmeticSlices
 
   > An integer array is called arithmetic if it consists of **at least three elements** and if the difference between any two consecutive elements is the same.
@@ -314,7 +360,7 @@ classic.h文件记录了一个经典的问题：最长上升字串。
   > + 1 <= s.length <= 100
   > + `s` contains only digits and may contain leading zero(s).
   
-+ ==264.Ugly Number II== nthUglyNumber
++ ==264.Ugly Number II== nthUglyNumber  **attention!!**
 
   > An **ugly number** is a positive integer whose prime factors are limited to `2`, `3`, and `5`.
   >
@@ -325,6 +371,40 @@ classic.h文件记录了一个经典的问题：最长上升字串。
 + ==96.Unique Binary Search Trees== numTrees
 
   > Given an integer `n`, return *the number of structurally unique **BST'**s (binary search trees) which has exactly* `n` *nodes of unique values from* `1` *to* `n`.
+  
++ ==322.Coin Change== coinChange
+
++ ==518.Coin Change 2== change  **attention!!**
+
+  > You are given an integer array `coins` representing coins of different denominations and an integer `amount` representing a total amount of money.
+  >
+  > Return *the number of combinations that make up that amount*. If that amount of money cannot be made up by any combination of the coins, return `0`.
+  >
+  > You may assume that you have an infinite number of each kind of coin.
+  >
+  > The answer is **guaranteed** to fit into a signed **32-bit** integer.
+
+  There are two approaches.
+
+  + Define $dp[i][j]$​ as the number of combinations to make up `j` by using the `coins[:i+1]` (the first `i` types of coins). Considering the state transition, $dp[i][j]$ contains: 
+
+    1. not using the `i` th coin, only using the first `i-1` types of coins, then we have $dp[i-1][j]$ ways.
+    2. using the first `i` types of coins, simultaneously, we notice that we have made up `j-coins[i]` by using the first `i` types of coins, so we just have to add a `coin[i]`, which means we have $dp[i][j-coins[i]]$​ ways.
+
+    In all, the state transition equation:
+    $$
+    dp[i][j]=dp[i-1][j] + dp[i][j-coins[i]]\\
+    dp[0][j] = 
+    \begin{cases}
+    1, & j \mod coins[0] ==0\\
+    0, & else
+    \end{cases}
+    $$
+    To initailize, we can calculate $dp[0][\cdots]$​ previously, and $dp[\cdots][0]$​​ is always 1.
+    The code is in "DoubleString.h".
+
+  + 
+
   
 
 ## 矩阵类(Matrix)
