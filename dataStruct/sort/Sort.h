@@ -1,15 +1,8 @@
 #ifndef SORT
 #define SORT
 
-template <typename T>
-class Sort
-{
-public:
-    //quick sort
-    void quicksortI(T*, int len);
-
-
-};
-
+#include "quickSort.h"
+#include "mergeSort.h"
+#include "ShellSort.h"
 
 #endif
