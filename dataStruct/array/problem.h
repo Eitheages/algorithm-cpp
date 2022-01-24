@@ -4,6 +4,7 @@
 #include "basic.h"
 using namespace std;
 
+namespace A{
 class Solution {
 public:
     vector<int> findDiagonalOrder(vector<vector<int>>& mat) {
@@ -143,7 +144,7 @@ public:
         // }
         // return row;
     }
-    
+
     string reverseWords(string s) {
         int i(0), j(0);
         while (i<s.length()) {
@@ -188,5 +189,5 @@ public:
         }
     }
 };
-
+}
 #endif
