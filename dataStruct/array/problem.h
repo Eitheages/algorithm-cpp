@@ -188,6 +188,33 @@ public:
             j++;
         }
     }
+
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        int i = -1, j = matrix.size()-1, m;
+        while (i < j)
+        {
+            m = (i+j+1) >> 1;
+            if (matrix[m][0] <= target)
+                i = m;
+            else
+                j = m-1;
+        }
+        if (i == -1)
+            return false;
+        int k = i;
+        i = 0, j = matrix[k].size()-1;
+        while (i <= j)
+        {
+            m = (i+j) >> 1;
+            if (matrix[k][m] == target)
+                return true;
+            else if (matrix[k][m] < target)
+                i = m+1;
+            else
+                j = m-1;
+        }
+        return false;
+    }
 };
 }
 #endif
