@@ -81,15 +81,15 @@ int QuickSort<T>::divideII(T* array, int left, int right)
 template <typename T>
 int QuickSort<T>::divideIII(T* a, int left, int right)
 {
-    T pivot = a[left];
-    int i = left, j = left + 1;
-    while (j <= right)
+    T pivot = a[right];
+    int i = left-1, j = left;
+    while (j < right)
     {
         if (a[j] < pivot)
-            swap(a[i++], a[j]);
+            swap(a[++i], a[j]);
         ++j;
     }
-    a[i] = pivot;
+    swap(a[++i], a[right]);
     return i;
 }
 
