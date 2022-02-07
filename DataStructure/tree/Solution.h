@@ -64,6 +64,71 @@ public:
             root->left = insertIntoBST(root->left, val);
         return root;
     }
+
+    bool isValidBST(TreeNode* root) {
+        return isValidBSTNode(root, (long)(-0x7fffffff-2), (long)(0x7fffffff+1));
+    }
+
+    bool isValidBSTNode(TreeNode *p, long low, long high)
+    {
+        bool f1 = 1, f2 = 1;
+        if (p->left)
+        {
+            int val = p->left->val;
+            f1 = val > low && val < p->val && isValidBSTNode(p->left, low, p->val);
+        }
+        if (!f1) // a simple optimization
+            return false;
+        if (p->right)
+        {
+            int val = p->right->val;
+            f2 = val > p->val && val < high && isValidBSTNode(p->right, p->val, high);
+        }
+        return f1 && f2;
+    }
+
+    bool findTarget(TreeNode* root, int k) {
+        typedef struct TreeNode* pNode;
+        unordered_set<int> s;
+        pNode tmp;
+        stack<pNode> stk;
+        if (root)
+            stk.push(root);
+
+        while (!stk.empty())
+        {
+            tmp = stk.top(), stk.pop();
+            s.insert(tmp->val);
+            if (tmp->right)
+                stk.push(tmp->right);
+            if (tmp->left)
+                stk.push(tmp->left);
+        }
+
+        auto it = s.cend();
+        for (const int &val: s)
+            if (val << 1 != k && s.find(k-val) != it)
+                return true;
+        return false;
+    }
+
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        int lower = p->val > q->val? q->val: p->val;
+        int upper = p->val + q->val - lower;
+
+        while (1)
+        {
+            if (root->val < lower)
+                root = root->right;
+            else if (root->val > upper)
+                root = root->left;
+            else
+                break;
+        }
+
+        return root;
+
+    }
 };
 
 #endif
