@@ -88,6 +88,61 @@ public:
         return {0, 0};
     }
 
+    // 53. Merge Intervals
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        sort(intervals.begin(), intervals.end(),
+                [](const vector<int> &a, const vector<int> &b)->bool{return (a[0] < b[0]);});
+        vector<vector<int>> res;
+        int begin = intervals[0][0], end = intervals[0][1];
+        const int N = intervals.size();
+        for (int i = 1; i < N; ++i)
+        {
+            if (end >= intervals[i][0])
+                end = max(intervals[i][1], end);
+            else
+            {
+                res.emplace_back(vector<int>{begin, end});
+                begin = intervals[i][0];
+                end = intervals[i][1];
+            }
+        }
+        res.emplace_back(vector<int>{begin, end});
+        return res;
+    }
+
+    // 240. Search a 2D Matrix II
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        const int M = matrix.size(), N = matrix[0].size();
+        int j = N - 1, i = 0;
+        while (i < M && j < N)
+        {
+            if (matrix[i][j] == target)
+                return true;
+            else if (matrix[i][j] < target)
+                ++i;
+            else
+                --j;
+        }
+        return false;
+    }
+
+    // 435. Non-overlapping Intervals
+    int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+        if (intervals.empty())
+            return 0;
+        sort(intervals.begin(), intervals.end(),
+            [](vector<int> &a, vector<int> &b){return a[0] < b[0] || a[0] == b[0] && a[1] < b[1];});
+        const int N = intervals.size();
+        vector<int> dp(N, 0);
+        dp[0] = 1;
+        for (int i = 1; i < N; ++i)
+        {
+            for (int j = 0; j < i; ++j)
+                if (intervals[j][1] <= intervals[i][0])
+                    dp[i] = max(dp[i], dp[j] + 1);
+        }
+        return N - *max_element(dp.begin(), dp.end());
+    }
 };
 
 

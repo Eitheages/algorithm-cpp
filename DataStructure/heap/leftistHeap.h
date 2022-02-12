@@ -4,7 +4,7 @@
 #include "base.h"
 #define min(a, b) ((a)>(b))? (b): (a)
 
-// based on leftist heap
+// based on the leftist heap
 template <typename T>
 class priorityQueue: public Queue<T>
 {

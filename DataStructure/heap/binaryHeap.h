@@ -4,7 +4,7 @@
 #include "base.h"
 #include <iostream>
 
-// based on binary heap
+// based on the binary heap
 template <typename T>
 class priorityQueue: public Queue<T>
 {
